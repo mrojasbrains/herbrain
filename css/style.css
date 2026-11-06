@@ -1,0 +1,622 @@
+/* ------------------------------------------------------------------
+   herbrain: baby blue + graffiti theme (shared by all pages)
+------------------------------------------------------------------- */
+
+:root {
+  --baby: #bfe6ff;
+  --baby-deep: #93d1ff;
+  --mortar: #a6d7f7;
+  --ink: #17132e;
+  --paper: #fffdf6;
+  --pink: #ff4fa3;
+  --lime: #a6f03c;
+  --yellow: #ffd93d;
+  --orange: #ff8a3d;
+  --purple: #9b5cff;
+  --cyan: #2fd6f0;
+  --red: #ff4d4d;
+
+  --font-tag: 'Sedgwick Ave Display', 'Permanent Marker', cursive;
+  --font-marker: 'Permanent Marker', 'Comic Sans MS', cursive;
+  --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius: 18px;
+  --shadow: 5px 5px 0 var(--ink);
+  --border: 3px solid var(--ink);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--baby);
+  /* light brick wall */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cg fill='none' stroke='%23a6d7f7' stroke-width='2'%3E%3Cpath d='M0 1H120M0 31H120M60 1V31M1 31V60M119 31V60'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px dashed var(--pink);
+  outline-offset: 3px;
+}
+
+/* ---------- spray paint splatters behind everything ---------- */
+
+.wall {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.splat {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.55;
+}
+
+.splat.s1 { width: 340px; height: 340px; background: var(--pink); top: -80px; left: -90px; }
+.splat.s2 { width: 280px; height: 280px; background: var(--yellow); top: 30%; right: -100px; }
+.splat.s3 { width: 300px; height: 300px; background: var(--lime); bottom: -110px; left: 20%; }
+.splat.s4 { width: 220px; height: 220px; background: var(--purple); top: 55%; left: -80px; opacity: 0.35; }
+.splat.s5 { width: 200px; height: 200px; background: var(--cyan); top: 8%; right: 25%; opacity: 0.35; }
+
+.dots {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background-image: radial-gradient(var(--ink) 1.5px, transparent 2px);
+  background-size: 14px 14px;
+  opacity: 0.12;
+  transform: rotate(12deg);
+}
+
+/* ---------- graffiti type ---------- */
+
+.graffiti {
+  font-family: var(--font-tag);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--pink);
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  text-shadow:
+    4px 4px 0 var(--yellow),
+    8px 8px 0 var(--ink);
+}
+
+.marker {
+  font-family: var(--font-marker);
+  font-weight: 400;
+}
+
+.highlight {
+  background: linear-gradient(transparent 55%, var(--yellow) 55%, var(--yellow) 90%, transparent 90%);
+  padding: 0 0.15em;
+}
+
+/* ---------- sticker buttons ---------- */
+
+.sticker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.7em 1.3em;
+  border: var(--border);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-marker);
+  font-size: 1.05rem;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.sticker-btn:hover {
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.sticker-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.sticker-btn.pink { background: var(--pink); color: var(--paper); }
+.sticker-btn.lime { background: var(--lime); }
+.sticker-btn.yellow { background: var(--yellow); }
+.sticker-btn.purple { background: var(--purple); color: var(--paper); }
+
+.sticker-btn.small {
+  padding: 0.4em 0.9em;
+  font-size: 0.9rem;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ------------------------------------------------------------------
+   Home page
+------------------------------------------------------------------- */
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px clamp(16px, 4vw, 40px);
+  background: rgba(191, 230, 255, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: var(--border);
+}
+
+.tag-logo {
+  font-family: var(--font-tag);
+  font-size: 1.9rem;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--purple);
+  -webkit-text-stroke: 1.5px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+.topnav nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 22px);
+}
+
+.topnav nav a {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.topnav nav a:not(.sticker-btn):hover {
+  text-decoration: underline wavy var(--pink) 2px;
+  text-underline-offset: 5px;
+}
+
+.topnav .sticker-btn {
+  padding: 0.35em 1em;
+  font-size: 0.95rem;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+main {
+  display: block;
+}
+
+.section {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 40px);
+}
+
+.section-title {
+  font-family: var(--font-marker);
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+}
+
+.section-title .num {
+  display: inline-block;
+  margin-right: 0.3em;
+  padding: 0 0.35em;
+  border: var(--border);
+  border-radius: 12px;
+  background: var(--yellow);
+  font-size: 0.6em;
+  vertical-align: middle;
+  transform: rotate(-6deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.lead {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  max-width: 62ch;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  min-height: calc(100svh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: clamp(40px, 8vw, 80px);
+}
+
+.kicker {
+  margin: 0 0 6px;
+  font-family: var(--font-marker);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  transform: rotate(-3deg);
+  background: var(--paper);
+  border: var(--border);
+  padding: 2px 14px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.hero h1 {
+  margin: 0.1em 0 0.15em;
+  font-size: clamp(5rem, 22vw, 15rem);
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+
+.hero h1 .accent {
+  color: var(--lime);
+}
+
+.drips {
+  display: block;
+  width: min(600px, 88%);
+  height: 70px;
+  margin: clamp(-3.6rem, -6vw, -1.4rem) 0 1rem clamp(0.2rem, 1.5vw, 1.2rem);
+  transform: rotate(-4deg);
+  transform-origin: left top;
+}
+
+.hero .lead {
+  max-width: 34ch;
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+  font-weight: 800;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.hero-sticker {
+  position: absolute;
+  right: clamp(16px, 6vw, 80px);
+  top: clamp(90px, 18vw, 170px);
+  width: clamp(130px, 22vw, 220px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 18px;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--yellow);
+  font-family: var(--font-marker);
+  font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+  line-height: 1.2;
+  box-shadow: var(--shadow);
+  transform: rotate(12deg);
+}
+
+.hero-sticker b {
+  display: block;
+  font-size: 2.1em;
+  line-height: 1;
+}
+
+/* ---------- cards & stickers ---------- */
+
+.grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+
+.grid.four {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+
+.card {
+  position: relative;
+  padding: 22px 22px 20px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-marker);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.card p {
+  margin: 0;
+}
+
+.grid > .card:nth-child(4n + 1) { transform: rotate(-1.2deg); }
+.grid > .card:nth-child(4n + 2) { transform: rotate(0.9deg); }
+.grid > .card:nth-child(4n + 3) { transform: rotate(-0.6deg); }
+.grid > .card:nth-child(4n + 4) { transform: rotate(1.3deg); }
+
+/* tape on top of a card */
+.card.taped::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 90px;
+  height: 26px;
+  transform: translateX(-50%) rotate(-4deg);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1.5px dashed rgba(23, 19, 46, 0.35);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat .big {
+  display: block;
+  font-family: var(--font-tag);
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  line-height: 1;
+  color: var(--c, var(--pink));
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 3px 3px 0 var(--ink);
+  margin-bottom: 8px;
+}
+
+.stat p {
+  font-weight: 700;
+}
+
+.pill {
+  display: inline-block;
+  padding: 1px 10px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--c, var(--lime));
+  font-weight: 800;
+  font-size: 0.85em;
+}
+
+/* ---------- two column layouts ---------- */
+
+.split {
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.neuron-figure {
+  margin: 0;
+  padding: 18px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  transform: rotate(1.5deg);
+}
+
+.neuron-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.neuron-figure figcaption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.check-list li {
+  position: relative;
+  padding-left: 34px;
+  margin-bottom: 12px;
+}
+
+.check-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--c, var(--lime));
+  transform: rotate(-8deg);
+}
+
+.check-list li:nth-child(2)::before { --c: var(--yellow); }
+.check-list li:nth-child(3)::before { --c: var(--pink); }
+.check-list li:nth-child(4)::before { --c: var(--cyan); }
+.check-list li:nth-child(5)::before { --c: var(--purple); }
+
+/* ---------- classification cards ---------- */
+
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mode-card:hover {
+  transform: translate(-3px, -3px) rotate(-1deg) !important;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.mode-card .swatches {
+  display: flex;
+  gap: 6px;
+}
+
+.mode-card .swatches i {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+
+.mode-card .go {
+  margin-top: auto;
+  font-family: var(--font-marker);
+  color: var(--pink);
+}
+
+/* ---------- click-the-brain section ---------- */
+
+.enter {
+  text-align: center;
+}
+
+.enter .section-title {
+  margin-bottom: 0.2em;
+}
+
+.brain-portal {
+  position: relative;
+  display: block;
+  width: min(720px, 100%);
+  aspect-ratio: 4 / 3;
+  margin: 18px auto 0;
+  border: var(--border);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 60%),
+    var(--baby-deep);
+  box-shadow: 8px 8px 0 var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.brain-portal canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.portal-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) rotate(-2deg);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.portal-arrow {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-family: var(--font-marker);
+  font-size: clamp(1rem, 2.4vw, 1.3rem);
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+
+.portal-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-marker);
+  font-size: 1.4rem;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  padding: 34px 16px 46px;
+  text-align: center;
+  border-top: var(--border);
+  background: var(--paper);
+}
+
+.footer .tag-logo {
+  font-size: 2.4rem;
+}
+
+.footer p {
+  margin: 6px 0 0;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 820px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .topnav nav a:not(.sticker-btn) {
+    display: none;
+  }
+
+  .hero-sticker {
+    position: static;
+    margin: 30px 0 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

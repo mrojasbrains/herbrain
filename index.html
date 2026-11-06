@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>herbrain · Meet Your Brain</title>
+  <meta name="description" content="A colorful crash course on the human brain, with a 3D brain you can spin, zoom and tap to learn every part.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Permanent+Marker&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="home">
+  <div class="wall" aria-hidden="true">
+    <div class="splat s1"></div>
+    <div class="splat s2"></div>
+    <div class="splat s3"></div>
+    <div class="splat s4"></div>
+    <div class="splat s5"></div>
+    <div class="dots" style="top: 12%; left: 62%;"></div>
+    <div class="dots" style="top: 68%; left: 6%;"></div>
+  </div>
+
+  <header class="topnav">
+    <a class="tag-logo" href="#top">herbrain</a>
+    <nav aria-label="Sections">
+      <a href="#what">The basics</a>
+      <a href="#facts">Stats</a>
+      <a href="#cells">Brain cells</a>
+      <a href="#maps">Classifications</a>
+      <a class="sticker-btn lime" href="explore.html">3D Brain</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="section hero" id="top">
+      <p class="kicker">meet the main character:</p>
+      <h1 class="graffiti">BRA<span class="accent">I</span>N</h1>
+      <svg class="drips" viewBox="0 0 640 70" aria-hidden="true">
+        <g fill="#ff4fa3" stroke="#17132e" stroke-width="3">
+          <path d="M40 0 h24 v38 a12 12 0 0 1 -24 0z" />
+          <path d="M150 0 h16 v58 a8 8 0 0 1 -16 0z" />
+          <path d="M260 0 h20 v26 a10 10 0 0 1 -20 0z" />
+          <path d="M390 0 h14 v48 a7 7 0 0 1 -14 0z" />
+          <path d="M500 0 h22 v34 a11 11 0 0 1 -22 0z" />
+        </g>
+      </svg>
+      <p class="lead">About 1.4 kg of wrinkly pink jelly that runs literally everything you do. Thinking, feeling, breathing, scrolling. Let's get into it.</p>
+      <div class="hero-cta">
+        <a class="sticker-btn pink" href="#what">Start the intro &darr;</a>
+        <a class="sticker-btn yellow" href="#enter">Skip to the 3D brain</a>
+      </div>
+      <div class="hero-sticker" aria-hidden="true">
+        <span><b>86</b>billion neurons, no cap</span>
+      </div>
+    </section>
+
+    <!-- ============ WHAT IS IT ============ -->
+    <section class="section" id="what">
+      <h2 class="section-title"><span class="num">01</span>So what even <span class="highlight">is</span> the brain?</h2>
+      <p class="lead">The brain is the control center of your whole body. It takes in information from your senses, figures out what it means, decides what to do, and sends out commands, all in a fraction of a second. It is also where your thoughts, memories, emotions and personality live.</p>
+      <div class="grid" style="margin-top: 34px;">
+        <div class="card taped">
+          <h3>The boss</h3>
+          <p>Every movement, thought and feeling starts here. Your brain sends signals through nerves to every part of your body.</p>
+        </div>
+        <div class="card taped">
+          <h3>Part of the CNS</h3>
+          <p>The brain + the spinal cord = the <b>central nervous system (CNS)</b>. All the nerves branching out to the rest of your body are the <b>peripheral nervous system (PNS)</b>.</p>
+        </div>
+        <div class="card taped">
+          <h3>Never off</h3>
+          <p>Even when you are asleep, your brain keeps your heart beating, your lungs breathing and your body temperature steady. Unpaid overtime, every night.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FACTS ============ -->
+    <section class="section" id="facts">
+      <h2 class="section-title"><span class="num">02</span>Brain stats that go hard</h2>
+      <div class="grid">
+        <div class="card stat" style="--c: var(--pink);">
+          <span class="big">86 bil</span>
+          <p>neurons (nerve cells), all chatting with each other</p>
+        </div>
+        <div class="card stat" style="--c: var(--yellow);">
+          <span class="big">1.4 kg</span>
+          <p>about the weight of a pineapple, around 2% of your body weight</p>
+        </div>
+        <div class="card stat" style="--c: var(--lime);">
+          <span class="big">20%</span>
+          <p>of your body's energy goes to your brain. Expensive taste.</p>
+        </div>
+        <div class="card stat" style="--c: var(--cyan);">
+          <span class="big">~75%</span>
+          <p>of your brain is water, so stay hydrated bestie</p>
+        </div>
+        <div class="card stat" style="--c: var(--orange);">
+          <span class="big">120 m/s</span>
+          <p>top speed of nerve signals, that's about 430 km/h</p>
+        </div>
+        <div class="card stat" style="--c: var(--purple);">
+          <span class="big">0</span>
+          <p>pain receptors in brain tissue. Surgeons can operate while patients are awake.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CELLS ============ -->
+    <section class="section" id="cells">
+      <h2 class="section-title"><span class="num">03</span>Brain cells 101</h2>
+      <div class="split">
+        <div>
+          <p class="lead">Your brain is made of two main types of cells: <b>neurons</b>, which send messages using electrical and chemical signals, and <b>glial cells</b>, the support crew that feeds, protects and cleans up after the neurons.</p>
+          <ul class="check-list">
+            <li><b>Dendrites</b> receive messages from other neurons.</li>
+            <li>The <b>cell body</b> has the nucleus and keeps the neuron alive.</li>
+            <li>The <b>axon</b> sends the message onward, like a long cable.</li>
+            <li><b>Myelin</b> wraps the axon in fat so signals zoom faster.</li>
+            <li>The tiny gap between two neurons is a <b>synapse</b>. Chemicals called neurotransmitters carry the message across.</li>
+          </ul>
+        </div>
+        <figure class="neuron-figure">
+          <svg viewBox="0 0 600 240" role="img" aria-labelledby="neuron-title">
+            <title id="neuron-title">Cartoon of a neuron with dendrites, cell body, axon, myelin and axon terminals</title>
+            <g stroke="#17132e" stroke-width="5" stroke-linecap="round" fill="none">
+              <path d="M110 120 L40 70 M70 92 L48 110 M110 120 L30 140 M60 132 L44 168 M110 120 L70 40 M88 80 L100 50 M110 120 L90 200 M100 160 L60 190" />
+              <path d="M150 120 H470" stroke-width="7" />
+              <path d="M470 120 L540 70 M470 120 L560 120 M470 120 L540 170 M510 92 L525 60" />
+            </g>
+            <g stroke="#17132e" stroke-width="4">
+              <circle cx="110" cy="120" r="40" fill="#ff4fa3" />
+              <circle cx="104" cy="114" r="14" fill="#9b5cff" />
+              <rect x="180" y="104" width="56" height="32" rx="16" fill="#ffd93d" />
+              <rect x="252" y="104" width="56" height="32" rx="16" fill="#ffd93d" />
+              <rect x="324" y="104" width="56" height="32" rx="16" fill="#ffd93d" />
+              <rect x="396" y="104" width="56" height="32" rx="16" fill="#ffd93d" />
+              <circle cx="540" cy="70" r="10" fill="#a6f03c" />
+              <circle cx="560" cy="120" r="10" fill="#a6f03c" />
+              <circle cx="540" cy="170" r="10" fill="#a6f03c" />
+              <circle cx="525" cy="60" r="8" fill="#a6f03c" />
+            </g>
+            <g font-family="Permanent Marker, cursive" font-size="17" fill="#17132e">
+              <text x="6" y="24">dendrites</text>
+              <text x="62" y="232">cell body</text>
+              <text x="240" y="88">myelin</text>
+              <text x="300" y="172">axon</text>
+              <text x="470" y="222">axon terminals</text>
+            </g>
+          </svg>
+          <figcaption>Signals travel from the dendrites, through the cell body, down the axon to the terminals.</figcaption>
+        </figure>
+      </div>
+
+      <div class="grid" style="margin-top: 46px;">
+        <div class="card">
+          <h3>Gray matter</h3>
+          <p>Mostly neuron cell bodies. It makes up the outer layer of the brain (the <b>cerebral cortex</b>), where most of the thinking happens.</p>
+        </div>
+        <div class="card">
+          <h3>White matter</h3>
+          <p>Bundles of axons wrapped in white, fatty myelin. It sits underneath and works like the brain's wiring, connecting different areas.</p>
+        </div>
+        <div class="card">
+          <h3>Gyri &amp; sulci</h3>
+          <p>The bumps are <b>gyri</b> (one is a gyrus) and the grooves are <b>sulci</b> (one is a sulcus). The folding packs a huge surface into your skull.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROTECTION ============ -->
+    <section class="section" id="protect">
+      <h2 class="section-title"><span class="num">04</span>Protected like a VIP</h2>
+      <p class="lead">Your brain is soft (think firm tofu), so your body guards it with layers of security.</p>
+      <div class="grid four" style="margin-top: 30px;">
+        <div class="card">
+          <h3>Skull</h3>
+          <p>The cranium is a helmet made of 8 bones fused together.</p>
+        </div>
+        <div class="card">
+          <h3>Meninges</h3>
+          <p>Three protective layers between skull and brain. From outside in: <b>dura mater</b>, <b>arachnoid mater</b>, <b>pia mater</b>. Remember it as <b>DAP</b>.</p>
+        </div>
+        <div class="card">
+          <h3>Cerebrospinal fluid</h3>
+          <p>CSF is a clear liquid the brain floats in. It cushions bumps and makes the brain feel way lighter than it is.</p>
+        </div>
+        <div class="card">
+          <h3>Blood-brain barrier</h3>
+          <p>A super picky filter in the brain's blood vessels that only lets certain things through. Gatekeeping, but make it healthy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLASSIFICATIONS ============ -->
+    <section class="section" id="maps">
+      <h2 class="section-title"><span class="num">05</span>How we classify the brain</h2>
+      <p class="lead">There is more than one way to slice it. Scientists divide the brain by halves, by how it develops, by lobes and by what each spot does. Pick any one to jump straight into the 3D brain.</p>
+      <div id="mode-cards" class="grid" style="margin-top: 34px;"></div>
+    </section>
+
+    <!-- ============ ENTER ============ -->
+    <section class="section enter" id="enter">
+      <h2 class="section-title"><span class="num">06</span>Now click the brain</h2>
+      <p class="lead" style="margin: 0 auto;">Spin it, zoom in, tap any part and find out what it does. Works with a mouse, a trackpad or your fingers.</p>
+      <a id="portal" class="brain-portal" href="explore.html" aria-label="Open the 3D brain explorer">
+        <span class="portal-arrow">tap me!</span>
+        <span class="sticker-btn pink portal-badge">Enter the 3D brain &rarr;</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="tag-logo">herbrain</span>
+    <p>Made by Ojas, with way too much dopamine.</p>
+  </footer>
+
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>

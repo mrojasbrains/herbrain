@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Brain Explorer · herbrain</title>
+  <meta name="description" content="Spin, zoom and tap a 3D brain to learn every part and what it does.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Permanent+Marker&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/explore.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="explore">
+  <header class="ex-top">
+    <a class="back-link" href="index.html">&larr; <span>Intro</span></a>
+    <h1 class="ex-title"><span class="tag">Brain</span> <span class="tag-2">Explorer</span></h1>
+    <div class="search">
+      <input id="search" type="search" placeholder="Find a part..." autocomplete="off" aria-label="Search brain parts">
+      <ul id="search-results" class="search-results" hidden></ul>
+    </div>
+  </header>
+
+  <nav id="tabs" class="tabs" role="tablist" aria-label="Classifications"></nav>
+
+  <main class="ex-main">
+    <div id="stage" class="stage">
+      <p id="hint" class="hint">Drag to spin · Scroll to zoom · Click a part</p>
+      <div id="toast" class="toast" hidden></div>
+      <div class="toolbar" role="toolbar" aria-label="View controls">
+        <button id="btn-reset" type="button" class="tool">Reset view</button>
+        <button id="btn-xray" type="button" class="tool" aria-pressed="false">X-ray</button>
+        <button id="btn-labels" type="button" class="tool" aria-pressed="true">Labels</button>
+        <button id="btn-spin" type="button" class="tool" aria-pressed="false">Spin</button>
+      </div>
+      <div id="loading" class="loading">
+        <p class="loading-text">growing a brain...</p>
+      </div>
+    </div>
+
+    <aside id="panel" class="panel">
+      <button id="sheet-toggle" type="button" class="sheet-toggle" aria-expanded="true" aria-controls="panel-body">
+        <span class="grip" aria-hidden="true"></span>
+        <span id="sheet-title" class="sheet-title">Brain Explorer</span>
+      </button>
+      <div id="panel-body" class="panel-body"></div>
+    </aside>
+  </main>
+
+  <script type="module" src="js/explore.js"></script>
+</body>
+</html>
