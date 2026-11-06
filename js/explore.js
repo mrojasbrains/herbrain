@@ -4,6 +4,7 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { buildBrain, commitCortexColors, NEUTRAL } from './brain.js';
 import { MODES, PARTS } from './data.js';
+import { modeText, mountToggles, onVoiceChange, partText, ui } from './voice.js';
 
 // ---------------------------------------------------------------------------
 // Setup
@@ -46,7 +47,25 @@ const els = {
   xray: $('#btn-xray'),
   labels: $('#btn-labels'),
   spin: $('#btn-spin'),
+  back: $('#back-text'),
+  loadingText: $('#loading-text'),
 };
+
+// Static interface wording that changes with the Gen Z / Science switch.
+function applyUiStrings() {
+  els.hint.textContent = ui(finePointer ? 'hintMouse' : 'hintTouch');
+  els.search.placeholder = ui('search');
+  els.reset.textContent = ui('reset');
+  els.xray.textContent = ui('xray');
+  els.labels.textContent = ui('labels');
+  els.spin.textContent = ui('spin');
+  els.back.textContent = ui('back');
+  els.loadingText.textContent = ui('loading');
+  document.documentElement.style.setProperty('--inside-text', JSON.stringify(ui('inside')));
+}
+
+mountToggles();
+applyUiStrings();
 
 const state = {
   mode: MODES[0],
@@ -642,7 +661,7 @@ function suggestElsewhere(key) {
     return;
   }
   const mode = MODE_BY_ID[HOME_MODE[match.id]];
-  showToast(`That's the <b>${escapeHtml(match.name)}</b>. It lives in the <b>${escapeHtml(mode.tab)}</b> tab.`, () => goToPart(match.id));
+  showToast(ui('toast')(escapeHtml(match.name), escapeHtml(modeText(mode.id).tab)), () => goToPart(match.id));
 }
 
 const activePointers = new Set();
@@ -790,7 +809,7 @@ function escapeHtml(text) {
 function renderTabs() {
   els.tabs.innerHTML = MODES.map((mode, i) => `
     <button type="button" role="tab" class="tab tab-${i % 6}" data-mode="${mode.id}"
-      aria-selected="${mode.id === state.mode.id}">${escapeHtml(mode.tab)}</button>`).join('');
+      aria-selected="${mode.id === state.mode.id}">${escapeHtml(modeText(mode.id).tab)}</button>`).join('');
   els.tabs.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
@@ -813,45 +832,47 @@ function chipList(title, ids) {
 function renderPanel() {
   const mode = state.mode;
   const part = state.part ? PARTS[state.part] : null;
-  els.sheetTitle.textContent = part ? part.name : mode.title;
+  const modeCopy = modeText(mode.id);
+  els.sheetTitle.textContent = part ? part.name : modeCopy.title;
 
   if (!part) {
     els.panelBody.innerHTML = `
-      <p class="eyebrow">Classification</p>
-      <h2 class="panel-title">${escapeHtml(mode.title)}</h2>
-      <p class="blurb">${escapeHtml(mode.blurb)}</p>
-      <p class="panel-hint">Tap a part on the brain, or pick one:</p>
+      <p class="eyebrow">${escapeHtml(ui('eyebrow'))}</p>
+      <h2 class="panel-title">${escapeHtml(modeCopy.title)}</h2>
+      <p class="blurb">${escapeHtml(modeCopy.blurb)}</p>
+      <p class="panel-hint">${escapeHtml(ui('tapHint'))}</p>
       <ul class="part-list">${mode.parts.map((id) => {
         const p = PARTS[id];
         return `<li><button type="button" data-part="${id}" style="--c:${p.color}">
-          <i></i><span><b>${escapeHtml(p.name)}</b><small>${escapeHtml(p.aka)}</small></span></button></li>`;
+          <i></i><span><b>${escapeHtml(p.name)}</b><small>${escapeHtml(partText(id).aka)}</small></span></button></li>`;
       }).join('')}</ul>`;
     els.panelBody.scrollTop = 0;
     return;
   }
 
+  const copy = partText(part.id);
   const index = mode.parts.indexOf(part.id);
   const count = mode.parts.length;
   els.panelBody.innerHTML = `
     <div class="card-nav">
-      <button type="button" class="link-btn" data-back>&larr; All parts</button>
+      <button type="button" class="link-btn" data-back>&larr; ${escapeHtml(ui('allParts'))}</button>
       <span>${index + 1} / ${count}</span>
     </div>
     <div class="card-title" style="--c:${part.color}">
       <i></i>
-      <div><h2>${escapeHtml(part.name)}</h2><p class="aka">${escapeHtml(part.aka)}</p></div>
+      <div><h2>${escapeHtml(part.name)}</h2><p class="aka">${escapeHtml(copy.aka)}</p></div>
     </div>
-    <p class="tagline">${escapeHtml(part.tagline)}</p>
-    <h3>Where is it?</h3>
-    <p>${escapeHtml(part.where)}</p>
-    <h3>What does it do?</h3>
-    <ul class="does">${part.does.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
-    <div class="fact"><span class="fact-tag">Fun fact</span><p>${escapeHtml(part.fact)}</p></div>
-    ${chipList('Includes', part.includes)}
-    ${chipList('Part of', part.belongs)}
+    <p class="tagline">${escapeHtml(copy.tagline)}</p>
+    <h3>${escapeHtml(ui('where'))}</h3>
+    <p>${escapeHtml(copy.where)}</p>
+    <h3>${escapeHtml(ui('does'))}</h3>
+    <ul class="does">${copy.does.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+    <div class="fact"><span class="fact-tag">${escapeHtml(ui('fact'))}</span><p>${escapeHtml(copy.fact)}</p></div>
+    ${chipList(ui('includes'), part.includes)}
+    ${chipList(ui('partOf'), part.belongs)}
     <div class="pager">
-      <button type="button" class="sticker-btn small" data-step="-1">&larr; Prev</button>
-      <button type="button" class="sticker-btn small pink" data-step="1">Next &rarr;</button>
+      <button type="button" class="sticker-btn small" data-step="-1">&larr; ${escapeHtml(ui('prev'))}</button>
+      <button type="button" class="sticker-btn small pink" data-step="1">${escapeHtml(ui('next'))} &rarr;</button>
     </div>`;
   els.panelBody.scrollTop = 0;
 }
@@ -882,10 +903,10 @@ function setSheet(open) {
 
 els.sheetToggle.addEventListener('click', () => setSheet(!els.panel.classList.contains('open')));
 
-// search across every part in every tab
-const searchIndex = Object.values(PARTS).map((part) => ({
+// search across every part in every tab (names + nicknames in the current voice)
+const searchIndex = () => Object.values(PARTS).map((part) => ({
   id: part.id,
-  text: `${part.name} ${part.aka} ${part.short ?? ''}`.toLowerCase(),
+  text: `${part.name} ${partText(part.id).aka} ${part.short ?? ''}`.toLowerCase(),
 }));
 
 function renderResults() {
@@ -894,15 +915,15 @@ function renderResults() {
     els.results.hidden = true;
     return;
   }
-  const matches = searchIndex.filter((entry) => entry.text.includes(query)).slice(0, 8);
+  const matches = searchIndex().filter((entry) => entry.text.includes(query)).slice(0, 8);
   els.results.innerHTML = matches.length
     ? matches.map((entry) => {
       const part = PARTS[entry.id];
       const mode = MODE_BY_ID[HOME_MODE[entry.id]];
       return `<li><button type="button" data-goto="${entry.id}" style="--c:${part.color}"><i></i>
-        <span><b>${escapeHtml(part.name)}</b><small>${escapeHtml(mode.tab)}</small></span></button></li>`;
+        <span><b>${escapeHtml(part.name)}</b><small>${escapeHtml(modeText(mode.id).tab)}</small></span></button></li>`;
     }).join('')
-    : '<li class="empty">No parts found. Try another spelling?</li>';
+    : `<li class="empty">${escapeHtml(ui('noResults'))}</li>`;
   els.results.hidden = false;
 }
 
@@ -957,7 +978,7 @@ els.spin.addEventListener('click', () => {
 
 let toastTimer = null;
 function showToast(html, onClick) {
-  els.toast.innerHTML = `<span>${html}</span>${onClick ? '<button type="button" class="sticker-btn small lime">Take me there</button>' : ''}`;
+  els.toast.innerHTML = `<span>${html}</span>${onClick ? `<button type="button" class="sticker-btn small lime">${escapeHtml(ui('toastGo'))}</button>` : ''}`;
   els.toast.hidden = false;
   els.toast.querySelector('button')?.addEventListener('click', () => {
     els.toast.hidden = true;
@@ -978,9 +999,15 @@ controls.addEventListener('start', () => {
   hideHint();
 });
 setTimeout(hideHint, 9000);
-if (!finePointer) {
-  els.hint.textContent = 'Drag to spin · Pinch to zoom · Tap a part';
-}
+
+onVoiceChange(() => {
+  applyUiStrings();
+  renderTabs();
+  renderPanel();
+  if (!els.results.hidden) {
+    renderResults();
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Resize + render loop

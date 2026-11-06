@@ -620,3 +620,91 @@ main {
     animation: none !important;
   }
 }
+
+/* ------------------------------------------------------------------
+   Gen Z / Science voice switch
+------------------------------------------------------------------- */
+
+html[data-voice='genz'] [data-v='sci'],
+html[data-voice='sci'] [data-v='genz'] {
+  display: none !important;
+}
+
+.voice-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-marker);
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.vt-track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex: none;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--pink);
+  transition: background 0.2s ease;
+}
+
+.vt-thumb {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--yellow);
+  transition: transform 0.2s ease;
+}
+
+.vt-label {
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.voice-toggle[aria-checked='false'] .vt-genz,
+.voice-toggle[aria-checked='true'] .vt-sci {
+  opacity: 1;
+}
+
+.voice-toggle[aria-checked='true'] .vt-track {
+  background: var(--cyan);
+}
+
+.voice-toggle[aria-checked='true'] .vt-thumb {
+  transform: translateX(20px);
+}
+
+@media (max-width: 520px) {
+  .voice-toggle {
+    gap: 5px;
+    padding: 3px 7px;
+    font-size: 0.78rem;
+  }
+
+  .vt-track {
+    width: 38px;
+    height: 22px;
+  }
+
+  .vt-thumb {
+    width: 15px;
+    height: 15px;
+  }
+
+  .voice-toggle[aria-checked='true'] .vt-thumb {
+    transform: translateX(16px);
+  }
+}

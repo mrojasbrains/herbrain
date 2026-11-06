@@ -31,13 +31,17 @@ Then open http://localhost:8000.
 | --- | --- |
 | `index.html` | The intro page |
 | `explore.html` | The 3D explorer page |
-| `js/data.js` | All the text: every classification and every brain part (names, functions, fun facts, colors) |
+| `js/data.js` | Every classification and brain part: names, colors, which 3D pieces they use |
+| `js/voice-genz.js`, `js/voice-sci.js` | All the explanations, in Gen Z and scientific voice |
+| `js/voice.js` | The Gen Z / Science switch and button wording |
 | `js/brain.js` | Builds the 3D brain out of code (no 3D model file needed) |
 | `js/explore.js` | The explorer: tabs, clicking parts, labels, camera, search |
 | `js/home.js` | The spinning brain on the intro page |
 | `css/style.css` | Shared graffiti / baby blue styling |
 | `css/explore.css` | Explorer layout (side panel on desktop, bottom sheet on phones) |
 
-To change any wording, edit `js/data.js`. Each part has a `tagline`, `where`, `does` (a list) and `fact`.
+The site has a **Gen Z / Science switch** (top bar). Gen Z is the default; the choice is remembered between pages.
+
+To change any wording, edit `js/voice-genz.js` (Gen Z) or `js/voice-sci.js` (scientific). Each part has an `aka`, `tagline`, `where`, `does` (a list) and `fact`; each tab has a `tab`, `title` and `blurb`. Intro page text is in `index.html`, written twice (`data-v="genz"` and `data-v="sci"`). `js/data.js` only holds structure (colors, which 3D pieces belong to each part).
 
 Built with [three.js](https://threejs.org) (loaded from a CDN).

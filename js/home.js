@@ -1,23 +1,32 @@
 import * as THREE from 'three';
 import { buildBrain, commitCortexColors, NEUTRAL } from './brain.js';
 import { MODES, PARTS } from './data.js';
+import { modeText, mountToggles, onVoiceChange, ui } from './voice.js';
+
+mountToggles();
 
 // ---------------------------------------------------------------------------
 // Classification cards, generated from the same data the explorer uses
 // ---------------------------------------------------------------------------
 
 const cards = document.getElementById('mode-cards');
-cards.innerHTML = MODES.map((mode) => {
-  const swatches = mode.parts.slice(0, 6).map((id) => `<i style="background:${PARTS[id].color}"></i>`).join('');
-  const names = mode.parts.map((id) => PARTS[id].name).join(', ');
-  return `
-    <a class="card mode-card" href="explore.html#mode=${mode.id}">
-      <span class="swatches">${swatches}</span>
-      <h3>${mode.title}</h3>
-      <p>${names}</p>
-      <span class="go">Explore in 3D &rarr;</span>
-    </a>`;
-}).join('');
+
+function renderCards() {
+  cards.innerHTML = MODES.map((mode) => {
+    const swatches = mode.parts.slice(0, 6).map((id) => `<i style="background:${PARTS[id].color}"></i>`).join('');
+    const names = mode.parts.map((id) => PARTS[id].name).join(', ');
+    return `
+      <a class="card mode-card" href="explore.html#mode=${mode.id}">
+        <span class="swatches">${swatches}</span>
+        <h3>${modeText(mode.id).title}</h3>
+        <p>${names}</p>
+        <span class="go">${ui('explore')} &rarr;</span>
+      </a>`;
+  }).join('');
+}
+
+renderCards();
+onVoiceChange(renderCards);
 
 // ---------------------------------------------------------------------------
 // Spinning brain preview inside the "click the brain" portal

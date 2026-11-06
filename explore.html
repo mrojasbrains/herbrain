@@ -1,7 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-voice="genz">
 <head>
   <meta charset="utf-8">
+  <script>
+    try {
+      document.documentElement.dataset.voice = localStorage.getItem('herbrain-voice') === 'sci' ? 'sci' : 'genz';
+    } catch (error) {
+      document.documentElement.dataset.voice = 'genz';
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Brain Explorer · herbrain</title>
   <meta name="description" content="Spin, zoom and tap a 3D brain to learn every part and what it does.">
@@ -21,8 +28,9 @@
 </head>
 <body class="explore">
   <header class="ex-top">
-    <a class="back-link" href="index.html">&larr; <span>Intro</span></a>
+    <a class="back-link" href="index.html">&larr; <span id="back-text">Intro</span></a>
     <h1 class="ex-title"><span class="tag">Brain</span> <span class="tag-2">Explorer</span></h1>
+    <div class="voice-host" data-voice-toggle></div>
     <div class="search">
       <input id="search" type="search" placeholder="Find a part..." autocomplete="off" aria-label="Search brain parts">
       <ul id="search-results" class="search-results" hidden></ul>
@@ -42,7 +50,7 @@
         <button id="btn-spin" type="button" class="tool" aria-pressed="false">Spin</button>
       </div>
       <div id="loading" class="loading">
-        <p class="loading-text">growing a brain...</p>
+        <p id="loading-text" class="loading-text">growing a brain...</p>
       </div>
     </div>
 
